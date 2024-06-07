@@ -312,37 +312,34 @@ address sizes   : 48 bits physical, 48 bits virtual
 power management:
 ```
 9. Run the command **top** and type **q** to quit. ***(1 mark)*** 
+
 ```bash
-processor       : 1
-vendor_id       : AuthenticAMD
-cpu family      : 25
-model           : 1
-model name      : AMD EPYC 7763 64-Core Processor
-stepping        : 1
-microcode       : 0xffffffff
-cpu MHz         : 3243.359
-cache size      : 512 KB
-physical id     : 0
-siblings        : 2
-core id         : 0
-cpu cores       : 1
-apicid          : 1
-initial apicid  : 1
-fpu             : yes
-fpu_exception   : yes
-cpuid level     : 13
-wp              : yes
-flags           : fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl tsc_reliable nonstop_tsc cpuid extd_apicid aperfmperf pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm cmp_legacy svm cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw topoext invpcid_single vmmcall fsgsbase bmi1 avx2 smep bmi2 erms invpcid rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 xsaves clzero xsaveerptr rdpru arat npt nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold v_vmsave_vmload umip vaes vpclmulqdq rdpid fsrm
-bugs            : sysret_ss_attrs null_seg spectre_v1 spectre_v2 spec_store_bypass srso
-top - 09:21:54 up 33 min,  0 users,  load average: 0.23, 0.34, 0.36
-Tasks:  23 total,   1 running,  22 sleeping,   0 stopped,   0 zombie
-%Cpu(s):  6.5 us,  3.3 sy,  0.0 ni, 90.2 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
-MiB Mem :   7929.6 total,    496.8 free,   1586.5 used,   5846.2 buff/cache
-MiB Swap:      0.0 total,      0.0 free,      0.0 used.   6027.0 avail Mem 
+top - 09:26:28 up 38 min,  0 users,  load average: 0.15, 0.18, 0.28
+Tasks:  24 total,   1 running,  23 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  6.7 us,  3.3 sy,  0.0 ni, 90.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+MiB Mem :   7929.6 total,    488.4 free,   1587.6 used,   5853.6 buff/cache
+MiB Swap:      0.0 total,      0.0 free,      0.0 used.   6025.9 avail Mem 
 
     PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND                           
-  10174 codespa+  20   0   21.5g 336044  49920 S   9.3   4.1   0:22.19 node                              
-    548 codespa+  20   0 1321120  98024  45312 S   0.3   1.2   0:09.49 node     
+      1 codespa+  20   0    1136    640    640 S   0.0   0.0   0:00.06 docker-init                       
+      7 codespa+  20   0    7236   1792   1792 S   0.0   0.0   0:00.02 sleep                             
+     22 root      20   0   12196   3480   2560 S   0.0   0.0   0:00.00 sshd                              
+    345 codespa+  20   0    2616   1408   1408 S   0.0   0.0   0:00.01 sh                                
+    375 root      20   0    2616   1536   1536 S   0.0   0.0   0:00.00 sh                                
+    539 codespa+  20   0    2624   1664   1664 S   0.0   0.0   0:00.00 sh                                
+    548 codespa+  20   0 1321888  98792  45312 S   0.0   1.2   0:10.03 node                              
+    583 codespa+  20   0 1240564  55120  41216 S   0.0   0.7   0:00.37 node                              
+   1002 codespa+  20   0 1126080  63544  42240 S   0.0   0.8   0:02.37 node                              
+   2276 codespa+  20   0    2616   1408   1408 S   0.0   0.0   0:00.00 sh                                
+   2338 root      20   0    2616   1408   1408 S   0.0   0.0   0:00.00 sh                                
+   2530 codespa+  20   0   16496  11392   3456 S   0.0   0.1   0:00.08 bash                              
+   3192 root      20   0 1983432  84524  52736 S   0.0   1.0   0:00.32 dockerd                           
+   3200 root      20   0 1724676  46028  30464 S   0.0   0.6   0:00.52 containerd                        
+   9905 codespa+  20   0    2616   1408   1408 S   0.0   0.0   0:00.00 sh                                
+   9972 root      20   0    2616   1664   1664 S   0.0   0.0   0:00.00 sh                                
+  10174 codespa+  20   0   21.5g 340948  49920 S   0.0   4.2   0:28.25 node                              
+  10185 codespa+  20   0 1240564  57592  41344 S   0.0   0.7   0:00.24 node                              
+  10211 codespa+  20   0 1010356  69492  40832 S   0.0   0.9   0:03.04 node       
  ```
 10. Run the command **uname -a**. ***(1 mark)*** 
 ```bash
