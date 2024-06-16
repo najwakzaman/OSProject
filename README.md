@@ -556,7 +556,7 @@ total 0
 
 1. Create a directory called webpage in your host machine
 ```bash
-nuradilahka ➜ ~ $ mkdir webpage
+@nuradilahka ➜ ~ $ mkdir webpage
 @nuradilahka ➜ ~ $ cd webpage
 ```
 2. Inside the directory, create a page index.html, with any content you would like
@@ -600,6 +600,7 @@ Status: Downloaded newer image for httpd:latest
 Permissions of Folder /usr/local/apache2/htdocs:
 
 Permissions: drwxr-xr-x
+
 User and Group:
 User: root
 Group: root.
