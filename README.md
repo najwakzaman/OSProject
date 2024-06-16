@@ -601,9 +601,9 @@ Permissions of Folder /usr/local/apache2/htdocs:
 
 Permissions: drwxr-xr-x
 User and Group:
-
 User: root
 Group: root.
+
 2. What port is the apache web server running. ***(1 mark)*** 80.
 3. What port is open for http protocol on the host machine? ***(1 mark)*** 8080.
 
