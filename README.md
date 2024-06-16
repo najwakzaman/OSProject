@@ -363,56 +363,137 @@ Architecture : AMD EPYC 7763 64-Core Processor
 
 1. At the terminal, run a linux instance. By typing the following command. 
 ```
-docker pull debian
-docker run --detach -it debian
+@nuradilahka ➜ /workspaces/OSProjects (main) $ docker pull debian
+Using default tag: latest
+latest: Pulling from library/debian
+fea1432adf09: Pull complete 
+Digest: sha256:a92ed51e0996d8e9de041ca05ce623d2c491444df6a535a566dabd5cb8336946
+Status: Downloaded newer image for debian:latest
+docker.io/library/debian:latest
+
+@nuradilahka ➜ /workspaces/OSProjects (main) $ docker run --detach -it debian
+bc027a914792792c8e8ee3ce2ab8936f6a8773cdaecef5fcc382026a0fc8fb27
 ```
 2. This will run the debian container. To check if the debian container is running, type
 ```bash
-@joeynor ➜ /workspaces/OSProject (main) $ docker ps -a
-CONTAINER ID   IMAGE     COMMAND   CREATED         STATUS         PORTS     NAMES
-f65be1987f84   debian    "bash"    4 minutes ago   Up 4 minutes             romantic_jackson
+@nuradilahka ➜ /workspaces/OSProject (main) $ docker ps -a
+CONTAINER ID   IMAGE     COMMAND   CREATED          STATUS          PORTS     NAMES
+bc027a914792   debian    "bash"    18 seconds ago   Up 17 seconds             agitated_williamson
 ```
 
 3. Keep note of the name used by your container, this is usually given random names unless you specify your own name. Now run a bash command on the container. Make sure you use the name of your container instead of the one shown here. 
 ```bash
-docker exec -i -t romantic_jackson /bin/bash
+@nuradilahka ➜ /workspaces/OSProject (main) $ docker exec -i -t agitated_williamson /bin/bash
 ```
 
 4. Create a file on the container. First you must make sure you are in the bash command prompt of the container. The container is new, and does not have any software other than the debian OS. To create a new file, you will need an editor installed. In the bash shell of the container, run the package manager apt-get to install nano text editor. 
 
 ```bash
-root@f65be1987f84:~# apt-get update      
+root@bc027a914792:/# apt-get update
+Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
+Get:2 http://deb.debian.org/debian bookworm-updates InRelease [55.4 kB]
+Get:3 http://deb.debian.org/debian-security bookworm-security InRelease [48.0 kB]
+Get:4 http://deb.debian.org/debian bookworm/main amd64 Packages [8786 kB]
+Get:5 http://deb.debian.org/debian bookworm-updates/main amd64 Packages [13.8 kB]
+Get:6 http://deb.debian.org/debian-security bookworm-security/main amd64 Packages [160 kB]
+Fetched 9214 kB in 1s (9545 kB/s)                         
+Reading package lists... Done
+root@bc027a914792:/# apt-get install nano
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following additional packages will be installed:
+  libgpm2 libncursesw6
+Suggested packages:
+  gpm hunspell
+The following NEW packages will be installed:
+  libgpm2 libncursesw6 nano
+0 upgraded, 3 newly installed, 0 to remove and 0 not upgraded.
+Need to get 837 kB of archives.
+After this operation, 3339 kB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+Get:1 http://deb.debian.org/debian bookworm/main amd64 libncursesw6 amd64 6.4-4 [134 kB]
+Get:2 http://deb.debian.org/debian bookworm/main amd64 nano amd64 7.2-1 [689 kB]
+Get:3 http://deb.debian.org/debian bookworm/main amd64 libgpm2 amd64 1.20.7-10+b1 [14.2 kB]
+Fetched 837 kB in 0s (35.5 MB/s)
+debconf: delaying package configuration, since apt-utils is not installed
+Selecting previously unselected package libncursesw6:amd64.
+(Reading database ... 6090 files and directories currently installed.)
+Preparing to unpack .../libncursesw6_6.4-4_amd64.deb ...
+Unpacking libncursesw6:amd64 (6.4-4) ...
+Selecting previously unselected package nano.
+Preparing to unpack .../archives/nano_7.2-1_amd64.deb ...
+Unpacking nano (7.2-1) ...
+Selecting previously unselected package libgpm2:amd64.
+Preparing to unpack .../libgpm2_1.20.7-10+b1_amd64.deb ...
+Unpacking libgpm2:amd64 (1.20.7-10+b1) ...
+Setting up libgpm2:amd64 (1.20.7-10+b1) ...
+Setting up libncursesw6:amd64 (6.4-4) ...
+Setting up nano (7.2-1) ...
+update-alternatives: using /bin/nano to provide /usr/bin/editor (editor) in auto mode
+update-alternatives: using /bin/nano to provide /usr/bin/pico (pico) in auto mode
+Processing triggers for libc-bin (2.36-9+deb12u7) ...
+root@bc027a914792:/# nano helloworld.txt
+root@bc027a914792:/# ls -la
+total 72
+drwxr-xr-x   1 root root 4096 Jun 16 04:53 .
+drwxr-xr-x   1 root root 4096 Jun 16 04:53 ..
+-rwxr-xr-x   1 root root    0 Jun 16 04:51 .dockerenv
+lrwxrwxrwx   1 root root    7 Jun 12 00:00 bin -> usr/bin
+drwxr-xr-x   2 root root 4096 Jan 28 21:20 boot
+drwxr-xr-x   5 root root  360 Jun 16 04:51 dev
+drwxr-xr-x   1 root root 4096 Jun 16 04:53 etc
+-rw-r--r--   1 root root   36 Jun 16 04:53 helloworld.txt
+drwxr-xr-x   2 root root 4096 Jan 28 21:20 home
+lrwxrwxrwx   1 root root    7 Jun 12 00:00 lib -> usr/lib
+lrwxrwxrwx   1 root root    9 Jun 12 00:00 lib64 -> usr/lib64
+drwxr-xr-x   2 root root 4096 Jun 12 00:00 media
+drwxr-xr-x   2 root root 4096 Jun 12 00:00 mnt
+drwxr-xr-x   2 root root 4096 Jun 12 00:00 opt
+dr-xr-xr-x 221 root root    0 Jun 16 04:51 proc
+drwx------   1 root root 4096 Jun 16 04:53 root
+drwxr-xr-x   3 root root 4096 Jun 12 00:00 run
+lrwxrwxrwx   1 root root    8 Jun 12 00:00 sbin -> usr/sbin
+drwxr-xr-x   2 root root 4096 Jun 12 00:00 srv
+dr-xr-xr-x  12 root root    0 Jun 16 04:51 sys
+drwxrwxrwt   1 root root 4096 Jun 16 04:53 tmp
+drwxr-xr-x   1 root root 4096 Jun 12 00:00 usr
+drwxr-xr-x   1 root root 4096 Jun 12 00:00 var
 
-root@f65be1987f84:~# apt-get install nano
-
-root@f65be1987f84:~# cd /root
-
-root@f65be1987f84:~# nano helloworld.txt
 ```
 
 5. Edit your helloworld.txt, create your messsage and save by typing ctrl-X. Once saved, explore using the container to see where the file is located. Then exit the shell, by typing **exit**.
 
+```bash
+root@bc027a914792:/# find / -name helloworld.txt
+/helloworld.txt
+root@bc027a914792:/# exit
+exit
+```
+
 6. Stop the container and run **docker ps -a**, and restart the container again. Is your file in the container still available?
 ```bash 
-@joeynor ➜ /workspaces/OSProject (main) $ docker stop romantic_jackson
+@nuradilahka ➜ /workspaces/OSProject (main) $ docker stop agitated_williamson
+agitated_williamson
 
-@joeynor ➜ /workspaces/OSProject (main) $ docker ps -a
-CONTAINER ID   IMAGE     COMMAND   CREATED          STATUS                        PORTS     NAMES
-f65be1987f84   debian    "bash"    19 minutes ago   Exited (137) 18 seconds ago             romantic_jackson
+@nuradilahka ➜ /workspaces/OSProject (main) $ docker ps -a
+CONTAINER ID   IMAGE     COMMAND   CREATED         STATUS                        PORTS     NAMES
+bc027a914792   debian    "bash"    4 minutes ago   Exited (137) 13 seconds ago             agitated_williamson
 
-@joeynor ➜ /workspaces/OSProject (main) $ docker restart romantic_jackson
+@nuradilahka ➜ /workspaces/OSProject (main) $ docker restart agitated_williamson
+agitated_williamson
 ```
 
 7. Stop the container and delete the container. What happened to your helloworld.txt?
 
 ```bash 
-@joeynor ➜ /workspaces/OSProject (main) $ docker stop romantic_jackson
-
-@joeynor ➜ /workspaces/OSProject (main) $ docker ps -a
-CONTAINER ID   IMAGE     COMMAND   CREATED          STATUS                        PORTS     NAMES
-f65be1987f84   debian    "bash"    19 minutes ago   Exited (137) 18 seconds ago             romantic_jackson
-
-@joeynor ➜ /workspaces/OSProject (main) $ docker rm romantic_jackson
+@nuradilahka ➜ /workspaces/OSProject (main) $ docker stop agitated_williamson
+agitated_williamson
+@nuradilahka ➜ /workspaces/OSProject (main) $ docker ps -a
+CONTAINER ID   IMAGE     COMMAND   CREATED         STATUS                        PORTS     NAMES
+bc027a914792   debian    "bash"    5 minutes ago   Exited (137) 11 seconds ago             agitated_williamson
+@nuradilahka ➜ /workspaces/OSProject (main) $ docker rm agitated_williamson
+agitated_williamson
 ```
 
 ***Questions:***
@@ -426,37 +507,79 @@ f65be1987f84   debian    "bash"    19 minutes ago   Exited (137) 18 seconds ago 
 
 1. In the previous experiment, you might have notice that containers are not persistent. To make storage persistent, you will need to mount them. 
 At the terminal, create a new directory called **myroot**, and run a instance of debian linux and mount myroot to the container. Find out the exact path of my root, and mount it as the root folder in the debian container. 
+
+```bash 
+@nuradilahka ➜ /workspaces/OSProject (main) $ mkdir myroot
+@nuradilahka ➜ /workspaces/OSProject (main) $ cd myroot/
+@nuradilahka ➜ /workspaces/OSProject/myroot (main) $ pwd
+/workspaces/OSProject/myroot
+@nuradilahka ➜ /workspaces/OSProject/myroot (main) $ docker run --detach -it -v /workspaces/OSProject/myroot:/root debian
+2aa98fc97dee277e78581473074f13a97e1436e6d31bd9ecfcc1aef08a12e3c6
+```
 2. Create a file in /root on the container, the files should also appear in myroot of your host VM.
 
 ```bash 
-@joeynor ➜ /workspaces/OSProject (main) $ mkdir myroot
-@joeynor ➜ /workspaces/OSProject (main) $ cd myroot/
-@joeynor ➜ /workspaces/OSProject/myroot (main) $ pwd
-/workspaces/OSProject/myroot
+@nuradilahka ➜ /workspaces/OSProject/myroot (main) $ docker run -it --name my-debian -v /home/user/myroot:/myroot debian
+touch /myroot/myfile.txt
+exit
+root@f8f979ddb313:/# touch /myroot/myfile.txt
+root@f8f979ddb313:/# exit
+exit
 
-@joeynor ➜ /workspaces/OSProject/myroot (main) $ docker run --detach -it -v /workspaces/OSProject/myroot:/root debian
+@nuradilahka ➜ /workspaces/OSProject/myroot (main) $ ls -l /home/user/
+myroot
+total 0
 ```
 
 ***Questions:***
 
-1. Check the permission of the files created in myroot, what user and group is the files created in docker container on the host virtual machine? . ***(2 mark)*** __Fill answer here__.
+1. Check the permission of the files created in myroot, what user and group is the files created in docker container on the host virtual machine? . ***(2 mark)*** User: root Group: root.
 2. Can you change the permission of the files to user codespace.  You will need this to be able to commit and get points for this question. ***(2 mark)***
 ```bash
-//use sudo and chown
-sudo chown -R codespace:codespace myroot
+@nuradilahka ➜ /workspaces/OSProject/myroot (main) $ docker stop my-debian
+my-debian
+@nuradilahka ➜ /workspaces/OSProject/myroot (main) $ docker rm my-debian
+my-debian
+@nuradilahka ➜ /workspaces/OSProject/myroot (main) $ docker run -it --name my-debian -v /home/user/myroot:/myroot debian
+root@c068abfa3981:/# touch /myroot/myfile.txt
+root@c068abfa3981:/# exit 
+exit
+@nuradilahka ➜ /workspaces/OSProject/myroot (main) $ sudo chown -R codespace:codespace /home/user/myroot
+@nuradilahka ➜ /workspaces/OSProject/myroot (main) $ ls -l /home/user/myroot
+total 0
+-rw-r--r-- 1 codespace codespace 0 Jun 16 05:07 myfile.txt
 
 ```
-*** __Fill answer here__.***
+*** User: codespace Group: codespace***
 
 ## You are on your own, create your own static webpage
 
 1. Create a directory called webpage in your host machine
+```bash
+nuradilahka ➜ ~ $ mkdir webpage
+@nuradilahka ➜ ~ $ cd webpage
+```
 2. Inside the directory, create a page index.html, with any content you would like
+
+```bash
+@nuradilahka ➜ ~/webpage $ touch index.html
+@nuradilahka ➜ ~/webpage $ nano index.html
+```
+
 3. Then, run the apache webserver and mount the webpage directory to it. Hint:
 ```bash
-## the -p 8080:80 flag points the host port 8080 to the container port 80
-
-docker run --detach -v /workspaces/OSProject/webpage:/usr/local/apache2/htdocs/ -p 8080:80 httpd
+@nuradilahka ➜ ~/webpage $ docker run --detach -v /workspaces/OSProject/webpage:/usr/local/apache2/htdocs/ -p 8080:80 httpd
+Unable to find image 'httpd:latest' locally
+latest: Pulling from library/httpd
+2cc3ae149d28: Pull complete 
+840d8df643b2: Pull complete 
+4f4fb700ef54: Pull complete 
+9d1465828338: Pull complete 
+4a16a983b278: Pull complete 
+9129890c4c50: Pull complete 
+Digest: sha256:10182d88d7fbc5161ae0f6f758cba7adc56d4aae2dc950e51d72c0cf68967cea
+Status: Downloaded newer image for httpd:latest
+73942f15de1e991fabdf7e7583d21b8c695c3a7ab20c228b0b64b074efb3ba80
 ```
 
 4. If it works, codespace will trigger a port assignment and provide a URL for you to access your webpage like the one below.
@@ -472,9 +595,17 @@ docker run --detach -v /workspaces/OSProject/webpage:/usr/local/apache2/htdocs/ 
 
 ***Questions:***
 
-1. What is the permission of folder /usr/local/apache/htdocs and what user and group owns the folder? . ***(2 mark)*** __Fill answer here__.
-2. What port is the apache web server running. ***(1 mark)*** __Fill answer here__.
-3. What port is open for http protocol on the host machine? ***(1 mark)*** __Fill answer here__.
+1. What is the permission of folder /usr/local/apache/htdocs and what user and group owns the folder? . ***(2 mark)*** 
+
+Permissions of Folder /usr/local/apache2/htdocs:
+
+Permissions: drwxr-xr-x
+User and Group:
+
+User: root
+Group: root.
+2. What port is the apache web server running. ***(1 mark)*** 80.
+3. What port is open for http protocol on the host machine? ***(1 mark)*** 8080.
 
 ## Create SUB Networks
 
