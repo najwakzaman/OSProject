@@ -613,36 +613,64 @@ Group: root.
 1. In docker, you can create your own private networks where you can run multiple services, in this part, we will create two networks, one called bluenet and the other is rednet
 2. Run the docker create network to create you networks like the ones below
 ```bash
-## STEP 1:
-## Create Networks ##
-docker network create bluenet
-docker network create rednet`
+@faheyraezzah ➜ /workspaces/OSProject (main) $ docker network create bluenet
+Error response from daemon: network with name bluenet already exists
+@faheyraezzah ➜ /workspaces/OSProject (main) $ docker network create rednet
+06abaa79737e523dff139bb8e3f820c9211234de282e62f441a01afc2e21b346
+@faheyraezzah ➜ /workspaces/OSProject (main) $ docker network ls
 
 ## STEP 2: (automatically running)
 ## Create (1) Container in background called "c1" running busybox image ##
-docker run -itd --net bluenet --name c1 busybox sh
-docker run -itd --net rednet --name c2 busybox sh
+@faheyraezzah ➜ /workspaces/OSProject (main) $ docker run -itd --net bluenet --name c1 busybox sh
+Unable to find image 'busybox:latest' locally
+latest: Pulling from library/busybox
+ec562eabd705: Pull complete 
+Digest: sha256:9ae97d36d26566ff84e8893c64a6dc4fe8ca6d1144bf5b87b2b85a32def253c7
+Status: Downloaded newer image for busybox:latest
+dc469b19d7baa0547c6f592e6718a89d871978e49d57b8aea14cdc5ff3b2b4f8
+@faheyraezzah ➜ /workspaces/OSProject (main) $ docker run -itd --net rednet --name c2 busybox sh
+43ebe3472970ba5aa3903210893efb23bf6a9083edb39a41d9f7babbcd1e35e0
 ```
 ***Questions:***
 
 1. Describe what is busybox and what is command switch **--name** is for? . ***(2 mark)*** __Fill answer here__.
+   BusyBox: BusyBox is a software suite that provides several Unix utilities in a single executable file. It is often used in embedded systems and Docker containers because it offers a lightweight set of tools that are        efficient and functional.
+   --name switch: The --name switch in Docker is used to assign a name to a container. This makes it easier to reference the container by name rather than by its container ID, simplifying management and identification of      the container.
+
 2. Explore the network using the command ```docker network ls```, show the output of your terminal. ***(1 mark)*** __Fill answer here__.
+   ![Screenshot 2024-06-16 213712](https://github.com/najwakzaman/OSProject/assets/137309946/f090c955-ccdd-4692-acf0-41d3513e603e)
+
 3. Using ```docker inspect c1``` and ```docker inspect c2``` inscpect the two network. What is the gateway of bluenet and rednet.? ***(1 mark)*** __Fill answer here__.
+   bluenet - Gateway: "172.18.0.1"
+   rednet - Gateway": "172.19.0.1"
+   
 4. What is the network address for the running container c1 and c2? ***(1 mark)*** __Fill answer here__.
+   c1(bluenet)-"IPAddress": "172.18.0.2"
+   c2(rednet)-"IPAddress": "172.19.0.2",
+   
 5. Using the command ```docker exec c1 ping c2```, which basically tries to do a ping from container c1 to c2. Are you able to ping? Show your output . ***(1 mark)*** __Fill answer here__.
+![Screenshot 2024-06-16 215524](https://github.com/najwakzaman/OSProject/assets/137309946/e93c18ad-d4ab-4796-a811-1cb285e6d114)
+Answer : No , Since c1 and c2 are on different networks (bluenet and rednet respectively), they cannot communicate directly with each other. Therefore, the ping command fails with a "bad address" error.
 
 ## Bridging two SUB Networks
 1. Let's try this again by creating a network to bridge the two containers in the two subnetworks
 ```
-docker network create bridgenet
-docker network connect bridgenet c1
-docker network connect bridgenet c2
-docker exec c1 ping c2
+@faheyraezzah ➜ /workspaces/OSProject (main) $  docker network create bridgenet
+@faheyraezzah ➜ /workspaces/OSProject (main) $ docker network connect bridgenet c1
+@faheyraezzah ➜ /workspaces/OSProject (main) $ docker network connect bridgenet c2
+@faheyraezzah ➜ /workspaces/OSProject (main) $ docker exec c1 ping c2
 ```
 ***Questions:***
 
 1. Are you able to ping? Show your output . ***(1 mark)*** __Fill answer here__.
+   Yes . I am able to ping c2 from c1 successfully.
+   ![Screenshot 2024-06-16 220821](https://github.com/najwakzaman/OSProject/assets/137309946/9a5914c4-327d-4620-8b97-ba4d2a459e8f)
+
 2. What is different from the previous ping in the section above? ***(1 mark)*** __Fill answer here__.
+   
+   Previous Ping: The previous ping attempt failed with the error ping: bad address 'c2' because c1 and c2 were on separate, isolated networks (bluenet and rednet) and couldn't communicate with each other directly.
+
+   Current Ping: After connecting both containers to the bridgenet network, they are now part of a common network, allowing them to communicate with each other. As a result, the ping from c1 to c2 is successful.
 
 ## Intermediate Level (10 marks bonus)
 
@@ -655,23 +683,66 @@ This guide will help you set up a simple Node.js website that retrieves a random
 Create a Docker network to for the two containers.
 For mysql, call it **mysqlnet** for nodejs call it **nodejsnet** .
 
+```sh
+@faheyraezzah ➜ /workspaces/OSProject (main) $ docker network create mysqlnet
+fac2d7ef92668402da163a452e839f6354648c882d96b8087b4ce57d1c8bd455
+@faheyraezzah ➜ /workspaces/OSProject (main) $ docker network create nodejsnet
+0e11ebb0d837e3443b1a3d7085af81dbd633deee846cf08c8832b7eb5f098795
+```
 #### Step 2: Set Up the MySQL Container
 
 Run a MySQL container on the created network.
 
 ```sh
-docker run --name mysql-container --network mysqlnet -e MYSQL_ROOT_PASSWORD=rootpassword -e MYSQL_DATABASE=mydatabase -e MYSQL_USER=myuser -e MYSQL_PASSWORD=mypassword -d mysql:latest
+@faheyraezzah ➜ /workspaces/OSProject (main) $ docker run --name mysql-container --network mysqlnet -e MYSQL_ROOT_PASSWORD=rootpassword -e MYSQL_DATABASE=mydatabase -e MYSQL_USER=myuser -e MYSQL_PASSWORD=mypassword -d mysql:latest
+Unable to find image 'mysql:latest' locally
+latest: Pulling from library/mysql
+07bc88e18c4a: Pull complete 
+1a9c1668bf49: Pull complete 
+1021dda8eecf: Pull complete 
+fb61b56acac1: Pull complete 
+0bca83908a5b: Pull complete 
+165e8b3d37ca: Pull complete 
+3e1b086f1295: Pull complete 
+dba651668484: Pull complete 
+ed90f5355e12: Pull complete 
+0412f59ab2b5: Pull complete 
+Digest: sha256:aa021e164da6aacbefc59ed0b933427e4835636be380f3b6523f4a6c9564e1f0
+Status: Downloaded newer image for mysql:latest
+39dff18d255f6aea8cc319d0d53363d877b73a9dea1156940c529dd329ce29b1
 ```
 
 #### Step 3: Set Up the Node.js Container
 
 1. **Create a directory for your Node.js application and initialize it.**
 
-    ```sh
-    mkdir nodejs-app
-    cd nodejs-app
-    npm init -y
-    npm install express mysql
+  ```sh
+@faheyraezzah ➜ /workspaces/OSProject (main) $  mkdir nodejs-app
+@faheyraezzah ➜ /workspaces/OSProject (main) $ cd nodejs-app
+@faheyraezzah ➜ /workspaces/OSProject/nodejs-app (main) $ npm init -y
+Wrote to /workspaces/OSProject/nodejs-app/package.json:
+
+{
+  "name": "nodejs-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
+
+@faheyraezzah ➜ /workspaces/OSProject/nodejs-app (main) $ npm install express mysql
+
+added 76 packages, and audited 77 packages in 11s
+
+12 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
     ```
 
 2. **Create a file named `index.js` with the following content:**
@@ -746,13 +817,16 @@ docker run --name mysql-container --network mysqlnet -e MYSQL_ROOT_PASSWORD=root
 1. **Build the Docker image for the Node.js application.**
 
     ```sh
-    docker build -t nodejs-app .
+   @faheyraezzah ➜ /workspaces/OSProject (main) $ docker build -t nodejs-app ./nodejs-app
+
+   @faheyraezzah ➜ /workspaces/OSProject/nodejs-app (main) $ docker build -t nodejs-app /workspaces/OSProject/nodejs-app
     ```
 
 2. **Run the Node.js container on the same network as the MySQL container.**
 
     ```sh
-    docker run --name nodejs-container --network nodejsnet -p 3000:3000 -d nodejs-app
+@faheyraezzah ➜ /workspaces/OSProject (main) $ docker run --name nodejs-container --network nodejsnet -p 3000:3000 -d nodejs-app
+ef294e87c6a72858fb2819075566cf22e6c8756b0d85f64137e9a24e04a2d7be
     ```
 
 #### Step 5: Test the Setup
@@ -760,7 +834,7 @@ docker run --name mysql-container --network mysqlnet -e MYSQL_ROOT_PASSWORD=root
 You can now test the setup by accessing the Node.js application in your browser or using a tool like `curl`:
 
 ```sh
-curl http://localhost:3000/random
+@faheyraezzah ➜ /workspaces/OSProject (main) $  curl http://localhost:3000/random
 ```
 
 #### Step 6: Ensure `mytable` is Populated
@@ -770,10 +844,17 @@ Make sure you have created the `mytable` table and populated it with some data i
 You can use the following SQL commands to create and populate the table (run these commands in the MySQL container):
 
 ```sql
-CREATE TABLE mytable (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(255) NOT NULL,
-  value VARCHAR(255) NOT NULL
+mysql> CREATE TABLE mytable (
+    ->   id INT AUTO_INCREMENT PRIMARY KEY,
+    ->   name VARCHAR(255) NOT NULL,
+    ->   value VARCHAR(255) NOT NULL
+    -> );
+ value) VALUES ('example1', 'value1'), ('example2', 'value2'), ('example3', 'value3');Query OK, 0 rows affected (0.11 sec)
+
+mysql> 
+mysql> INSERT INTO mytable (name, value) VALUES ('example1', 'value1'), ('example2', 'value2'), ('example3', 'value3');
+Query OK, 3 rows affected (0.04 sec)
+Records: 3  Duplicates: 0  Warnings: 0
 );
 
 INSERT INTO mytable (name, value) VALUES ('example1', 'value1'), ('example2', 'value2'), ('example3', 'value3');
@@ -786,7 +867,10 @@ You have now set up a Node.js application in a Docker container on nodejsnet net
 ***Questions:***
 
 1. What is the output of step 5 above, explain the error? ***(1 mark)*** __Fill answer here__.
-2. Show the instruction needed to make this work. ***(1 mark)*** __Fill answer here__.
+   ![Screenshot 2024-06-17 002446](https://github.com/najwakzaman/OSProject/assets/137309946/059d5f8d-d5a4-471c-9403-fe0d97d0931f)    
+   The "Server Error" message indicates that there was a problem when trying to handle the request to http://localhost:3000/random from our Node.js application. This error commonly occurs due to issues related to              database connectivity, query execution, or error handling within the Node.js application itself.
+
+3. Show the instruction needed to make this work. ***(1 mark)*** __Fill answer here__.
 
 
 
