@@ -870,7 +870,11 @@ You have now set up a Node.js application in a Docker container on nodejsnet net
    ![Screenshot 2024-06-17 002446](https://github.com/najwakzaman/OSProject/assets/137309946/059d5f8d-d5a4-471c-9403-fe0d97d0931f)    
    The "Server Error" message indicates that there was a problem when trying to handle the request to http://localhost:3000/random from our Node.js application. This error commonly occurs due to issues related to              database connectivity, query execution, or error handling within the Node.js application itself.
 
-3. Show the instruction needed to make this work. ***(1 mark)*** __Fill answer here__.
+2. Show the instruction needed to make this work. ***(1 mark)*** __Fill answer here__.
+   To make the setup work , connect the Node.js container to the mysqlnet network using the following command : 
+    ```sh
+    docker network connect mysqlnet nodejs-container
+   ```
 
 
 
