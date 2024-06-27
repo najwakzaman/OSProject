@@ -1,5 +1,3 @@
-![webpage](https://github.com/najwakzaman/OSProject/assets/145886073/8c1af567-9691-48f7-8f67-dfa28d534631)# OSProject Running Containers for Application Development
-
 Group Name: Latte
 
 Section: 2 
@@ -586,8 +584,7 @@ Status: Downloaded newer image for httpd:latest
 
 4. If it works, codespace will trigger a port assignment and provide a URL for you to access your webpage like the one below.
 
- <img src="./images/websitelink.png" width="70%">
-![webpage](https://github.com/najwakzaman/OSProject/assets/145886073/e6683320-2623-40ab-9d8d-4f1bbadebf86)
+![webpage](https://github.com/najwakzaman/OSProject/assets/145886073/8c1af567-9691-48f7-8f67-dfa28d534631)# OSProject Running Containers for Application Development
 
 
 5. You can also see the Port in the **PORTS** tab, next to the terminal tab.
