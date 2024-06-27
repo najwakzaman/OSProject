@@ -496,6 +496,9 @@ bc027a914792   debian    "bash"    5 minutes ago   Exited (137) 11 seconds ago  
 agitated_williamson
 ```
 
+helloworld.txt is removed. 
+Deleting the container resulting in all its data, including the helloworld.txt file, is removed. 
+
 ***Questions:***
 
 1. Are files in the container persistent. Why not?. ***(1 mark)*** 
@@ -510,7 +513,7 @@ At the terminal, create a new directory called **myroot**, and run a instance of
 
 ```bash 
 @nuradilahka ➜ /workspaces/OSProject (main) $ mkdir myroot
-@nuradilahka ➜ /workspaces/OSProject (main) $ cd myroot/
+@nuradilahka ➜ /workspaces/OSProject (main) $ cd myroot
 @nuradilahka ➜ /workspaces/OSProject/myroot (main) $ pwd
 /workspaces/OSProject/myroot
 @nuradilahka ➜ /workspaces/OSProject/myroot (main) $ docker run --detach -it -v /workspaces/OSProject/myroot:/root debian
@@ -526,9 +529,8 @@ root@f8f979ddb313:/# touch /myroot/myfile.txt
 root@f8f979ddb313:/# exit
 exit
 
-@nuradilahka ➜ /workspaces/OSProject/myroot (main) $ ls -l /home/user/
-myroot
-total 0
+@nuradilahka ➜ /workspaces/OSProject/myroot (main) $ ls -l /home/user/myroot
+helloworld.txt
 ```
 
 ***Questions:***
@@ -633,22 +635,22 @@ dc469b19d7baa0547c6f592e6718a89d871978e49d57b8aea14cdc5ff3b2b4f8
 ```
 ***Questions:***
 
-1. Describe what is busybox and what is command switch **--name** is for? . ***(2 mark)*** __Fill answer here__.
+1. Describe what is busybox and what is command switch **--name** is for? . ***(2 mark)***
    BusyBox: BusyBox is a software suite that provides several Unix utilities in a single executable file. It is often used in embedded systems and Docker containers because it offers a lightweight set of tools that are        efficient and functional.
    --name switch: The --name switch in Docker is used to assign a name to a container. This makes it easier to reference the container by name rather than by its container ID, simplifying management and identification of      the container.
 
-2. Explore the network using the command ```docker network ls```, show the output of your terminal. ***(1 mark)*** __Fill answer here__.
+2. Explore the network using the command ```docker network ls```, show the output of your terminal. ***(1 mark)***
    ![Screenshot 2024-06-16 213712](https://github.com/najwakzaman/OSProject/assets/137309946/f090c955-ccdd-4692-acf0-41d3513e603e)
 
-3. Using ```docker inspect c1``` and ```docker inspect c2``` inscpect the two network. What is the gateway of bluenet and rednet.? ***(1 mark)*** __Fill answer here__.
+3. Using ```docker inspect c1``` and ```docker inspect c2``` inscpect the two network. What is the gateway of bluenet and rednet.? ***(1 mark)***
    bluenet - Gateway: "172.18.0.1"
    rednet - Gateway": "172.19.0.1"
    
-4. What is the network address for the running container c1 and c2? ***(1 mark)*** __Fill answer here__.
+4. What is the network address for the running container c1 and c2? ***(1 mark)***
    c1(bluenet)-"IPAddress": "172.18.0.2"
    c2(rednet)-"IPAddress": "172.19.0.2",
    
-5. Using the command ```docker exec c1 ping c2```, which basically tries to do a ping from container c1 to c2. Are you able to ping? Show your output . ***(1 mark)*** __Fill answer here__.
+5. Using the command ```docker exec c1 ping c2```, which basically tries to do a ping from container c1 to c2. Are you able to ping? Show your output . ***(1 mark)*** 
 ![Screenshot 2024-06-16 215524](https://github.com/najwakzaman/OSProject/assets/137309946/e93c18ad-d4ab-4796-a811-1cb285e6d114)
 Answer : No , Since c1 and c2 are on different networks (bluenet and rednet respectively), they cannot communicate directly with each other. Therefore, the ping command fails with a "bad address" error.
 
