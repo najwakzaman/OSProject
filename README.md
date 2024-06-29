@@ -566,6 +566,9 @@ total 0
 @nuradilahka ➜ ~/webpage $ nano index.html
 ```
 
+![index.html](https://github.com/najwakzaman/OSProject/assets/145886073/38e4c948-2d3d-46dd-9c08-bc754fbe2127)
+
+
 3. Then, run the apache webserver and mount the webpage directory to it. Hint:
 ```bash
 @nuradilahka ➜ ~/webpage $ docker run --detach -v /workspaces/OSProject/webpage:/usr/local/apache2/htdocs/ -p 8080:80 httpd
